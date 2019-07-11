@@ -1,0 +1,145 @@
+<div class="card bg-primary">
+  <div
+    class="card-header text text-truncate text-white"
+    style="height: 3rem; border: none;"
+  >
+    <strong>Update</strong>
+  </div>
+  <ul
+    class="list-group mb-1 text text-truncate text-black ml-1 mr-1 disable-text-selection"
+  >
+    <li class="list-group-item list-group-item-action">
+      <textarea
+        wrap="hard"
+        rows="1"
+        class="form-control"
+        name="todoTaskName"
+        placeholder="task"
+        style="resize: none;"
+        [(ngModel)]="todo.taskName"
+      ></textarea>
+    </li>
+    <li
+      class="list-group-item list-group-item-action"
+      [ngClass]="!todo.isInTodayView ? 'null' : 'bg-primary text-white'"
+      (click)="changeToTodayView(todo)"
+      [class.disabled]="todo.id < 0"
+    >
+      <fa-icon
+        class="float-left mr-5"
+        [icon]="['far', 'sun']"
+        size="lg"
+        [styles]="{ color: 'orange' }"
+        [spin]="true"
+      ></fa-icon>
+      Add to todays view
+    </li>
+  </ul>
+  <ul
+    class="list-group mb-1 text text-truncate text-black ml-1 mr-1 disable-text-selection"
+  >
+    <li class="list-group-item list-group-item-action">
+      <div class="row mb-3">
+        <fa-icon
+          class="float-left ml-3 mr-5"
+          [icon]="['fas', 'bell']"
+          size="lg"
+        ></fa-icon
+        >Remind me!
+      </div>
+      <div class="row d-flex align-items-center">
+        <div class="col-sm-6">
+          <input
+            type="text"
+            class="form-control mb-3"
+            placeholder="Remind Me Date"
+            bsDatepicker
+            value="{{ todo.remindMeDateTime | date: 'MMM d, y' }}"
+            [(ngModel)]="todo.remindMeDateTime"
+          />
+        </div>
+        <div class="col-sm-6">
+          <timepicker
+            [(ngModel)]="todo.remindMeDateTime"
+            [showMeridian]="true"
+            [showMinutes]="false"
+            [showSeconds]="false"
+          ></timepicker>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item list-group-item-action">
+      <div class="row mb-3">
+        <fa-icon
+          class="float-left ml-3 mr-5"
+          [icon]="['fas', 'calendar']"
+          size="lg"
+        ></fa-icon
+        >Add a last date
+      </div>
+      <div class="row d-flex align-items-center">
+        <div class="col-sm-6">
+          <input
+            type="text"
+            class="form-control mb-3"
+            placeholder="Remind Me Date"
+            bsDatepicker
+            value="{{ todo.taskLastDateTime | date: 'MMM d, y' }}"
+            [(ngModel)]="todo.taskLastDateTime"
+          />
+        </div>
+        <div class="col-sm-6">
+          <timepicker
+            [(ngModel)]="todo.taskLastDateTime"
+            [showMeridian]="true"
+            [showMinutes]="false"
+            [showSeconds]="false"
+          ></timepicker>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div class="mt-2 mb-2 ml-1 mr-1">
+    <h5 class="text text-truncate text-white ml-3 mt-3">Note</h5>
+    <textarea
+      wrap="hard"
+      rows="5"
+      class="form-control"
+      name="todoNote"
+      style="resize: none;"
+      [(ngModel)]="todo.note"
+    ></textarea>
+  </div>
+  <div class="card-footer">
+    <div>
+      <button
+        class="btn btn-circle float-left"
+        style="outline: none; background: none;"
+        [disabled]="todo.id < 0"
+        (click)="update(todo.id, todo)"
+      >
+        <fa-icon
+          class="float-left"
+          [icon]="['fas', 'check']"
+          [styles]="{ color: 'green' }"
+          size="lg"
+          tooltip="update"
+        ></fa-icon>
+      </button>
+      <button
+        class="btn btn-circle float-right"
+        style="outline: none; background: none;"
+        [disabled]="todo.id < 0"
+        (click)="delete(todo.id)"
+      >
+        <fa-icon
+          tooltip="delete"
+          class="float-right"
+          [icon]="['fas', 'trash-alt']"
+          [styles]="{ color: 'black' }"
+          size="lg"
+        ></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>

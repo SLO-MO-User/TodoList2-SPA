@@ -1,0 +1,145 @@
+<div class="card bg-primary" style="min-width: 300px;">
+  <div
+    class="card-header text text-truncate text-white"
+    style="height: 3rem; border: none;"
+  >
+    <strong>Task List</strong
+    ><fa-icon class="float-right" [icon]="['fas', 'tasks']" size="lg"></fa-icon>
+  </div>
+  <ul
+    class="list-group border rounded d-flex mb-1 text text-truncate text-black ml-1 mr-1 disable-text-selection"
+  >
+    <li
+      class="list-group-item list-group-item-action"
+      (click)="passList('today')"
+      [class.active]="this.selectedList === 'today'"
+    >
+      Today<fa-icon
+        class="float-right"
+        [icon]="['fas', 'sun']"
+        size="lg"
+        [spin]="true"
+        [styles]="{ color: 'orange' }"
+      ></fa-icon>
+      <span class="ml-2 badge badge-primary"
+      [class.badge-light]="this.selectedList === 'today'">{{badgeCount[4]}}</span>
+    </li>
+    <li
+      class="list-group-item list-group-item-action"
+      (click)="passList('important')"
+      [class.active]="this.selectedList === 'important'"
+    >
+      Important<fa-icon
+        class="float-right"
+        [icon]="['fas', 'star']"
+        size="lg"
+        [styles]="{ color: 'orange' }"
+        [spin]="true"
+      ></fa-icon>
+      <span class="ml-2 badge badge-primary"
+      [class.badge-light]="this.selectedList === 'important'">{{badgeCount[3]}}</span>
+    </li>
+    <li
+      class="list-group-item list-group-item-action"
+      (click)="passList('planned')"
+      [class.active]="this.selectedList === 'planned'"
+    >
+      Planned<fa-icon
+        class="float-right"
+        [icon]="['fas', 'calendar-week']"
+        size="lg"
+      ></fa-icon>
+      <span class="ml-2 badge badge-primary"
+      [class.badge-light]="this.selectedList === 'planned'">{{badgeCount[2]}}</span>
+    </li>
+    <li
+      class="list-group-item list-group-item-action"
+      (click)="passList('completed')"
+      [class.active]="this.selectedList === 'completed'"
+    >
+      Completed<fa-icon
+        class="float-right"
+        [icon]="['fas', 'calendar-check']"
+        size="lg"
+      ></fa-icon>
+      <span class="ml-2 badge badge-primary"
+      [class.badge-light]="this.selectedList === 'completed'">{{badgeCount[1]}}</span>
+    </li>
+    <li
+      class="list-group-item list-group-item-action"
+      (click)="passList('tasks')"
+      [class.active]="this.selectedList === 'tasks'"
+    >
+      Tasks<fa-icon
+        class="float-right"
+        [icon]="['fas', 'tasks']"
+        size="lg"
+      ></fa-icon>
+      <span
+        class="ml-2 badge badge-primary"
+        [class.badge-light]="this.selectedList === 'tasks'"
+        >{{badgeCount[0]}}</span
+      >
+    </li>
+  </ul>
+  <!-- <ul class="list-group ml-1 mr-1 mb-2 disable-text-selection">
+    <li class="list-group-item">
+      <button
+        type="button"
+        class="btn btn-default btn-circle"
+        tooltip="add new list"
+        (click)="openModal(template)"
+      >
+        <fa-icon [icon]="['far', 'plus-square']" size="lg"></fa-icon>
+      </button>
+    </li>
+    <div *ngFor="let item of listItems">
+      <li
+        class="list-group-item list-group-item-action"
+        (click)="passList(item.listName)"
+        [class.active]="this.selectedList === item.listName"
+      >
+        <div class="row">
+          <div class="col-md-10">
+            <div
+              class="text text-truncate text-black"
+              tooltip="{{ item.listName }}"
+            >
+              {{ item.listName }}
+            </div>
+          </div>
+          <div class="col-md-2">
+            <span class="badge badge-light">{{ item.count }}</span>
+          </div>
+        </div>
+      </li>
+    </div>
+  </ul> -->
+</div>
+
+<!-- Modal -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">New Todo List</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <textarea
+      wrap="hard"
+      cols="5"
+      rows="3"
+      class="form-control mb-3"
+      name="itemNote"
+      #textarea
+      [(ngModel)]="textValue"
+    ></textarea>
+    <button class="btn btn-secondary w-100" >Add</button>
+  </div>
+</ng-template>

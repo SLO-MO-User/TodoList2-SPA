@@ -1,0 +1,124 @@
+<div class="card bg-primary">
+  <div class="row">
+    <div class="col-12 col-sm-12 text text-white">
+      <div class="card-header">
+        <strong class="m-4">Tasks</strong>
+        <button
+          mat-icon-button
+          class="float-right"
+          style="border: none; background: none;"
+        >
+          <fa-icon
+            tooltip="add new todo"
+            (click)="openModal(template)"
+            class="float-right"
+            [icon]="['fas', 'plus']"
+            [styles]="{ color: 'white' }"
+            size="lg"
+          ></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ul class="list-group ml-1 mr-1 mb-2">
+    <li class="list-group-item border rounded card-text mt-1 bg-primary">
+      <div class="row">
+        <div class="col-xs-12 col-12">
+          <pagination
+            [totalItems]="totalTodosCount"
+            (pageChanged)="pageChanged($event)"
+            [(ngModel)]="currentPage"
+          ></pagination>
+        </div>
+      </div>
+    </li>
+    <div *ngFor="let todo of todos | async">
+      <li
+        class="list-group-item border rounded list-group-item-action card-text mt-1"
+        (click)="passTodo(todo)"
+        [class.active]="todo === this.selectedTodo"
+      >
+        <div class="row">
+          <div class="col-md-2">
+            <ng-container *ngIf="todo.isComplete; else elseComplete">
+              <fa-icon
+                (click)="changeToCompleted(todo)"
+                class="float-left"
+                [icon]="['fas', 'circle']"
+                size="lg"
+                [styles]="{ color: '#4A484C' }"
+              ></fa-icon>
+            </ng-container>
+            <ng-template #elseComplete>
+              <fa-icon
+                (click)="changeToCompleted(todo)"
+                class="float-left"
+                [icon]="['fas', 'circle-notch']"
+                size="lg"
+                [spin]="true"
+                [styles]="{ color: '#4A484C' }"
+              ></fa-icon>
+            </ng-template>
+          </div>
+          <div class="col-md-8">
+            <div
+              class="text-truncate text-black disable-text-selection"
+              [ngClass]="!todo.isComplete ? 'null' : 'strikethrough'"
+              tooltip="{{ todo.taskName }}"
+            >
+              {{ todo.taskName }}
+            </div>
+          </div>
+          <div class="col-md-2">
+            <ng-container *ngIf="todo.isImportant; else elseImportant">
+              <fa-icon
+                (click)="changeToImportant(todo)"
+                class="float-right"
+                [icon]="['fas', 'star']"
+                size="lg"
+                [spin]="true"
+                [styles]="{ color: 'orange' }"
+              ></fa-icon>
+            </ng-container>
+            <ng-template #elseImportant>
+              <fa-icon
+                (click)="changeToImportant(todo)"
+                class="float-right"
+                [icon]="['far', 'star']"
+                size="lg"
+                [styles]="{ stroke: 'red', color: 'orange' }"
+              ></fa-icon>
+            </ng-template>
+          </div>
+        </div>
+      </li>
+    </div>
+  </ul>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">New Todo Item</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <textarea
+      wrap="hard"
+      cols="5"
+      rows="3"
+      class="form-control mb-3"
+      name="itemNote"
+      required
+      [(ngModel)]="newTodo"
+    ></textarea>
+    <button class="btn btn-primary w-100" (click)="addTodo()">Add</button>
+  </div>
+</ng-template>

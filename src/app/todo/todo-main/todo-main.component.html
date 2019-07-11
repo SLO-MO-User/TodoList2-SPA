@@ -1,0 +1,58 @@
+<div fxLayout="row">
+  <div class="row bg-primary">
+    <div class="col-12 col-sm-12">
+      <button
+        mat-icon-button
+        class="float-left"
+        style="border: none; background: none;"
+        (click)="lnav.toggle()"
+      >
+        <fa-icon
+          class="float-left"
+          [icon]="['fas', 'bars']"
+          size="lg"
+          [styles]="{ color: 'white' }"
+        ></fa-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="float-right"
+        style="border: none; background: none;"
+        (click)="rnav.toggle()"
+      >
+        <fa-icon
+          class="float-left"
+          [icon]="['fas', 'bars']"
+          size="lg"
+          [styles]="{ color: 'white' }"
+        ></fa-icon>
+      </button>
+    </div>
+  </div>
+  <mat-drawer-container>
+    <mat-drawer #lnav [position]="'start'" [mode]="'side'" class="bg-primary flex-fill">
+      <div class="">
+        <app-todo-menu-left></app-todo-menu-left>
+      </div>
+    </mat-drawer>
+    <mat-drawer #rnav [position]="'end'" [mode]="'side'" class="bg-primary flex-fill">
+      <div class="">
+        <app-todo-menu-right></app-todo-menu-right>
+      </div>
+    </mat-drawer>
+
+    <mat-drawer-content style="overflow: hidden">
+      <div class="row bg-primary">
+        <!-- Force next columns to break to new line -->
+        <div class="w-100"></div>
+
+        <div
+          class="col-12 col-sm-12"
+          style="height: 100vh; margin-block-end: 5%"
+        >
+          <app-todo-list></app-todo-list>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
